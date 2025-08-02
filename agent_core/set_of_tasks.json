@@ -1,0 +1,5 @@
+[
+    {"task_type" : "Lint", "command" : "cargo", "args" : ["clippy"], "retry_pn_failure" : false },
+    {"task_type" : "Test", "command" : "cargo", "args" : ["test"], "retry_pn_failure" : true },
+    {"task_type" : "Build", "command" : "docker", "args" : ["build", "-t", "my_app", "."], "retry_pn_failure" : false }
+]
