@@ -1,7 +1,8 @@
 # DevOps Agent
 
 ## Description
-DevOps Agent with CI/CD Tasking (I thought it to be a MCP server and a client).
+DevOps Agent with CI/CD Tasking (I thought it to be a MCP server with clients).
+
 Modern delivery pipelines are increaseingly complex, invlolving tasks like environment provisioning, code linting, test orchestration, build artifact generation, and deployment rollouts. These tasks are often automated, but rarely orchestrated by sintelligent agents that understand context, adjust plans, or recover from failure. 
 
 A ***DevOps Agent*** can fill this gap by triggering, monitoring and adapting CI/CD workflow based on plans and goals. The agent is able to invoke shell commands, interact with GitHub Actions or external CI tools, validate results and escalate issues based on configurable rules. It also has a full logging capability.
@@ -16,5 +17,21 @@ The DevOps agent's primary functions include:
 - Logging all results and detecting failed or flaky tasks.
 - Supporting rollback or retry for critical stages.
 
-It can be extended to coordinate between multiple agent must handle. Each task is mapped to a command, arguments, and optional policy.
 
+## Current State
+I've build a basic template for the agent, that implements basic logging, task execution pipeline and test mcp server.
+
+## Build and Clone
+***Clone***
+```bash
+git clone https://github.com/letv1nnn/DevOps-Agent.git
+cd DevOps-Agent/
+```
+
+***Build***
+
+NOTE: Depending on your operating system, extension is different, so for Windows put *".exe"* at the end, for Linux, just leave it like that.
+```bash
+cargo build --release
+./target/release/agent_core --config set_of_tasks.json
+```
