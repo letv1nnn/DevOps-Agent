@@ -1,10 +1,10 @@
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use serde::ser::StdError;
-use serde_json::json;
+use serde_json::Value;
 use tokio::fs::File;
 use tokio::io::AsyncWriteExt;
-use tracing::info;
+use tracing::{error, info};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct LLMessage {
@@ -88,26 +88,61 @@ pub async fn send_request(promt: &str) -> Result<String, Box<dyn StdError>> {
 // VALIDATING AND WRITING LLM GENERATED PIPELINE TO THE JSON CONFIG FILE
 // VALIDATION AND WRITING INTO FILE SHOULD BE LOGGED
 
-pub async fn plan_validation(_plan: &str) -> Result<(), Box<dyn std::error::Error>> {
+pub async fn plan_validation(plan: &str) -> Result<Vec<Value>, Box<dyn std::error::Error>> {
+    info!("Validating pipeline plan");
 
-    Ok(())
+    let parsed: Value = serde_json::from_str(plan)
+        .map_err(|e| {
+            error!("Failed to parse plan as JSON: {}", e);
+            e
+        })?;
+
+    let tasks = parsed.as_object().ok_or("Plan must be a JSON array")?;
+
+    for (i, task) in tasks {
+        let task_obj = task.as_object().ok_or(format!("Task {} is not an object", i))?;
+
+        if !task_obj.contains_key("task_type") {
+            return Err(format!("Task {} missing 'task_type' field", i).into());
+        }
+
+        if !task_obj.contains_key("command") {
+            return Err(format!("Task {} missing 'command' field", i).into());
+        }
+    
+        if let Some(task_type) = task_obj.get("task_type") {
+            let valid_types = ["Lint", "Test", "Build", "Deploy", "Rollback"];
+            let type_str = task_type.as_str().ok_or("task_type must be a string")?;
+            if !valid_types.contains(&type_str) {
+                return Err(format!("Invalid task_type '{}' in task {}", type_str, i).into());
+            }
+        }
+    }
+
+    info!("Plan validation successful");
+
+    Ok(vec![])
 }
 
 pub async fn json_config_file(path: &str, plan: &str) -> Result<(), Box<dyn std::error::Error>> {
     info!("Writing pipeline config to {}", path);
     
-    let plan = match plan_validation(plan) {
-        Ok(_) => (),
-        Err(e) => {
-            eprint!("Error: {e}");
-            return std::error::Error;
-        }
-    }
+    let validated_plan = plan_validation(plan).await.map_err(|e| {
+        error!("Failed to create file {}: {}", path, e);
+        e
+    })?;
 
-    let plan = json!(plan);
+    let json_plan = serde_json::to_string_pretty(&validated_plan)?;
 
-    let mut file = File::create(path).await?;
-    file.write_all(plan.to_string().as_bytes()).await?;
+    let mut file = File::create(path).await.map_err(|e| {
+        error!("Failed to create file {}: {}", path, e);
+        e
+    })?;
+
+    file.write_all(json_plan.to_string().as_bytes()).await.map_err(|e| {
+        error!("Failed to create file {}: {}", path, e);
+        e
+    })?;
 
     info!("Successfully wrote pipeline config to {}", path);
 
