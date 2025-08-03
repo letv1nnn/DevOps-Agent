@@ -25,7 +25,7 @@ where DevOpsAgent: 'static + Send + Sync, {
             tool_router: Self::tool_router(),
         }
     }
-
+    
     #[tool(description = "prints information about the agent")]
     pub async fn agent_information(&self) -> Result<CallToolResult, ErrorData> {
         eprintln!("Using \"agent information\" tool.");

@@ -10,11 +10,11 @@
 //  +-------------------------------------------------------+
 //
 // DevOps MCP based Agent. 
-// Read full documentation on the github (https://github.com/letv1nnn).
+// Read full documentation on the github (https://github.com/letv1nnn/DevOps-Agent).
 
 extern crate agent_core;
 
-use agent_core::task_execution::execute_pipeline;
+use agent_core::{logging, task_execution::execute_pipeline};
 use agent_core::DevOpsAgent;
 use agent_core::task_execution::Task;
 use agent_core::logging::CLI;
@@ -23,6 +23,7 @@ use rmcp::{transport::stdio, ServiceExt};
 
 #[tokio::main]
 async fn main() {
+    logging::init_logging();
     run_cli().await;
 }
 
