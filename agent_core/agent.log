@@ -1,0 +1,23 @@
+[2m2025-08-03T10:52:22.014557Z[0m [32m INFO[0m [2magent_core::task_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mLint
+[2m2025-08-03T10:52:22.600104Z[0m [32m INFO[0m [2magent_core::task_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mLint [3moutput[0m[2m=[0m
+[2m2025-08-03T10:52:22.600162Z[0m [32m INFO[0m [2magent_core::task_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
+[2m2025-08-03T10:52:25.747413Z[0m [32m INFO[0m [2magent_core::task_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+[2m2025-08-03T10:52:25.747620Z[0m [32m INFO[0m [2magent_core::task_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mBuild
+[2m2025-08-03T10:52:28.306620Z[0m [31mERROR[0m [2magent_core::task_execution[0m[2m:[0m Task failed [3mtask[0m[2m=[0mBuild [3merror[0m[2m=[0mERROR: error during connect: Head "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/_ping": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+[2m2025-08-03T10:52:28.306705Z[0m [31mERROR[0m [2magent_core::task_execution[0m[2m:[0m Halting pipeline due to failure

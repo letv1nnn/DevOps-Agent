@@ -6,12 +6,11 @@ use rmcp::{
 
 pub mod task_execution;
 pub mod logging;
+pub mod plan_generating;
 
 pub struct DevOpsAgent {
     tool_router: ToolRouter<Self>,
 }
-
-
 
 
 // MCP SERVER, TEST VERSION

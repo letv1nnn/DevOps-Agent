@@ -19,7 +19,7 @@ The DevOps agent's primary functions include:
 
 
 ## Current State
-I've build a basic template for the agent, that implements basic logging, task execution pipeline and test mcp server.
+I've build a basic template for the agent, that implements basic logging, task execution pipeline and test mcp server. It can execute a pipeline of tasks and log results into the agent.log file.
 
 ## Build and Clone
 ***Clone***
@@ -33,5 +33,10 @@ cd DevOps-Agent/
 NOTE: Depending on your operating system, extension is different, so for Windows put *".exe"* at the end, for Linux, just leave it like that.
 ```bash
 cargo build --release
-./target/release/agent_core --config set_of_tasks.json
+./target/release/agent_core -- --config set_of_tasks.json # your json config file
 ```
+
+## Ideas for Extension
+- GitHub/GitLab API integration.
+- LLM-based interpretation of build logs or error summarization.
+
