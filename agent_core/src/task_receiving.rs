@@ -1,6 +1,7 @@
-use tokio::fs::File;
 use tracing::{error, info};
 use std::{error::Error, fmt::Display};
+
+use crate::{plan_generating::{json_config_file, send_request}, task_execution::{execute_pipeline, Task}};
 
 // AGENT NEEDS TO RECEIVE TASKS VIA CLI, REST OR MCP, SO THIS MODULE CONFIGURE EACH TYPE OF THE INTERFACE
 
@@ -62,21 +63,39 @@ async fn cli() -> Result<(), Box<dyn Error>> {
             _ => {
                 if command.trim().contains("-p") || command.trim().contains("--plan") {
                     let command: Vec<&str> = command.split_whitespace().collect();
+                    if command.len() < 2 {
+                        println!("Missing argument for --plan / -p");
+                        continue;
+                    }
                     let arg = command[1].trim();
                     match arg {
                         "--gen" => {
-                            // Generating the plan by the given input.
+                            // GENERATING THE PLAN BY THE GIVEN INPUT
+                            println!("Enter your prompt for plan generation:");
+                            let mut prompt = String::new();
+                            std::io::stdin().read_line(&mut prompt).expect("Failed to read line");
+
+                            let plan = send_request(&prompt).await.map_err(|e| {
+                                error!("Plan generation failed!");
+                                e
+                            })?;
+
+                            let _config_file_configuration = json_config_file("set_of_tasks.json", plan.as_str()).await.map_err(|e| {
+                                error!("Failed to set configuration file!");
+                                e
+                            })?;
                         },
                         _ => {
-                            if command.len() < 2 {
-                                let file = File::open(arg).await.map_err(|e| {
-                                    error!("Failed to open file {}: {}", arg, e);
-                                    e
-                                })?;
-                                
+                            if command.len() < 3 {
+                                // USE EXISTED PLAN
+                                info!("Using {} file.", arg);
+                                let file = std::fs::read_to_string(arg).expect("Failed to read config");
+                                let tasks: Vec<Task> = serde_json::from_str(&file).expect("Invalid config");
+
+                                execute_pipeline(tasks).await;
                             } else {
-                            println!("Too many arguments. You can only specify file or --gen fo plan generation.");
-                            continue;
+                                println!("Too many arguments. You can only specify file or --gen fo plan generation.");
+                                continue;
                             }
                         }
                     }

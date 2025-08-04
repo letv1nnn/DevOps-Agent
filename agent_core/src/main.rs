@@ -21,12 +21,26 @@ use agent_core::task_execution::Task;
 use agent_core::logging::CLI;
 use clap::Parser;
 use rmcp::{transport::stdio, ServiceExt};
+// use tracing::{error};
 
 #[tokio::main]
 async fn main() {
-    let _ = interface_configuration(Interface::CLI).await;
-
+    /*
+    let args = CLI::parse();
+    let interface = match &args.config.as_str() {
+        "CLI" => Interface::CLI,
+        "API" => Interface::API,
+        "MCP" => Interface::MCP,
+        _ => {
+            error!("Failed to configure the agent");
+            
+        },
+    };
+    */
     logging::init_logging();
+    let interface = Interface::CLI;
+    let _ = interface_configuration(interface).await;
+
     // run_cli().await;
 }
 

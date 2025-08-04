@@ -18,8 +18,14 @@ The DevOps agent's primary functions include:
 - Supporting rollback or retry for critical stages.
 
 
+## Configurations
+Configuration of this agent is actually large, like you can change ollama model, plan generation template, .json file, etc. I'll finish this section later. For now, just consider that the current agent version leverages ***mistral***, which is quite slow comparing to other models like ***wizardlm2***.
+
+
 ## Current State
-I've build a basic template for the agent, that implements basic logging, task execution pipeline and test mcp server. It can execute a pipeline of tasks and log results into the agent.log file.
+**2 - 3 Aug** - I've build a basic template for the agent, that implements basic logging, task execution pipeline and test mcp server. It can execute a pipeline of tasks and log results into the agent.log file.
+
+**4 Aug** - I've extended the agent, so it has a basic CLI and can load and execute file with CI pipeline, or generate the plan with Ollama LLM. Plan generation consist of generation, validating the plan so the consequent plan is actually valid and loading to ***.json*** file. Conclusion: Current agent version can cenerate or use already existed plan and execute the pipeline inside of the CI plan, loggs everything in the ***agent.log*** file, only CLI interface is done out of API and MCP.
 
 ## Build and Clone
 You primarily need to install [rust](https://www.rust-lang.org/tools/install) compiler. 
@@ -39,7 +45,7 @@ cd DevOps-Agent/
 NOTE: Depending on your operating system, extension is different, so for Windows leave *".exe"*, otherwise remove this extension.   
 ```bash
 cargo build --release
-./target/release/agent_core.exe -- --config set_of_tasks.json # your json config file
+./target/release/agent_core.exe
 ```
 
 ## Ideas for Extension

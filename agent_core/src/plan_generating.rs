@@ -97,9 +97,12 @@ pub async fn plan_validation(plan: &str) -> Result<Vec<Value>, Box<dyn std::erro
             e
         })?;
 
-    let tasks = parsed.as_object().ok_or("Plan must be a JSON array")?;
+    let tasks = parsed
+        .as_array()
+        .ok_or("Plan must be a JSON array")?
+        .to_vec();
 
-    for (i, task) in tasks {
+    for (i, task) in tasks.iter().enumerate() {
         let task_obj = task.as_object().ok_or(format!("Task {} is not an object", i))?;
 
         if !task_obj.contains_key("task_type") {
@@ -121,7 +124,7 @@ pub async fn plan_validation(plan: &str) -> Result<Vec<Value>, Box<dyn std::erro
 
     info!("Plan validation successful");
 
-    Ok(vec![])
+    Ok(tasks)
 }
 
 pub async fn json_config_file(path: &str, plan: &str) -> Result<(), Box<dyn std::error::Error>> {
