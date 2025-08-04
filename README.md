@@ -1,7 +1,7 @@
 # DevOps Agent
 
 ## Description
-DevOps Agent with CI/CD Tasking (I thought it to be a MCP server with clients).
+***DevOps Agent with CI/CD Tasking*** (I thought it to be a MCP server with clients).
 
 Modern delivery pipelines are increaseingly complex, invlolving tasks like environment provisioning, code linting, test orchestration, build artifact generation, and deployment rollouts. These tasks are often automated, but rarely orchestrated by sintelligent agents that understand context, adjust plans, or recover from failure. 
 
@@ -22,6 +22,12 @@ The DevOps agent's primary functions include:
 I've build a basic template for the agent, that implements basic logging, task execution pipeline and test mcp server. It can execute a pipeline of tasks and log results into the agent.log file.
 
 ## Build and Clone
+You primarily need to install [rust](https://www.rust-lang.org/tools/install) compiler. 
+For Windows go to the provided official website and download it from there, for other operating systems like Linux, Mac or WSL use:
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
 ***Clone***
 ```bash
 git clone https://github.com/letv1nnn/DevOps-Agent.git
@@ -30,10 +36,10 @@ cd DevOps-Agent/
 
 ***Build***
 
-NOTE: Depending on your operating system, extension is different, so for Windows put *".exe"* at the end, for Linux, just leave it like that.
+NOTE: Depending on your operating system, extension is different, so for Windows leave *".exe"*, otherwise remove this extension.   
 ```bash
 cargo build --release
-./target/release/agent_core -- --config set_of_tasks.json # your json config file
+./target/release/agent_core.exe -- --config set_of_tasks.json # your json config file
 ```
 
 ## Ideas for Extension

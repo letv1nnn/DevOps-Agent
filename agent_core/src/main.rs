@@ -14,6 +14,7 @@
 
 extern crate agent_core;
 
+use agent_core::task_receiving::{interface_configuration, Interface};
 use agent_core::{logging, task_execution::execute_pipeline};
 use agent_core::DevOpsAgent;
 use agent_core::task_execution::Task;
@@ -23,11 +24,13 @@ use rmcp::{transport::stdio, ServiceExt};
 
 #[tokio::main]
 async fn main() {
+    let _ = interface_configuration(Interface::CLI).await;
+
     logging::init_logging();
-    run_cli().await;
+    // run_cli().await;
 }
 
-async fn run_cli() {
+async fn _run_cli() {
     let args = CLI::parse();
     let file = std::fs::read_to_string(&args.config).expect("Failed to read config");
     let tasks: Vec<Task> = serde_json::from_str(&file).expect("Invalid config");

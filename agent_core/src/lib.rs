@@ -7,6 +7,7 @@ use rmcp::{
 pub mod task_execution;
 pub mod logging;
 pub mod plan_generating;
+pub mod task_receiving;
 
 pub struct DevOpsAgent {
     tool_router: ToolRouter<Self>,
