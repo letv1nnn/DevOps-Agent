@@ -1,10 +1,9 @@
 [
   {
     "args": [
-      "run",
-      "lint"
+      "clippy"
     ],
-    "command": "npm",
+    "command": "cargo",
     "retry_on_failure": false,
     "task_type": "Lint"
   },
@@ -12,26 +11,19 @@
     "args": [
       "test"
     ],
-    "command": "npm",
+    "command": "cargo",
     "retry_on_failure": true,
     "task_type": "Test"
   },
   {
     "args": [
-      "build"
+      "build",
+      "-t",
+      "my_app",
+      "."
     ],
-    "command": "webpack",
+    "command": "docker",
     "retry_on_failure": false,
     "task_type": "Build"
-  },
-  {
-    "args": [
-      "apply",
-      "-f",
-      "deployment.yaml"
-    ],
-    "command": "kubectl",
-    "retry_on_failure": false,
-    "task_type": "Deploy"
   }
 ]

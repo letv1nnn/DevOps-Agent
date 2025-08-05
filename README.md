@@ -27,6 +27,11 @@ Configuration of this agent is actually large, like you can change ollama model,
 
 **4 Aug** - I've extended the agent, so it has a basic CLI and can load and execute file with CI pipeline, or generate the plan with Ollama LLM. Plan generation consist of generation, validating the plan so the consequent plan is actually valid and loading to ***.json*** file. Conclusion: Current agent version can cenerate or use already existed plan and execute the pipeline inside of the CI plan, loggs everything in the ***agent.log*** file, only CLI interface is done out of API and MCP.
 
+**5 Aug** - For now, the agent can execute predefined or LLM generated CI pipeline. I've added some additional flags for CLI commands.
+
+## Current Problems
+Agent is not finished yet, I need to distribute over several cargo projects and configure everything, so there possibly could be an error with building this agent. Also, current code is kind of dirty, so need to lint it.
+
 ## Build and Clone
 You primarily need to install [rust](https://www.rust-lang.org/tools/install) compiler. 
 For Windows go to the provided official website and download it from there, for other operating systems like Linux, Mac or WSL use:

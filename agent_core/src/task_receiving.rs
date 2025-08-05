@@ -1,3 +1,4 @@
+use tokio::process::Command;
 use tracing::{error, info};
 use std::{error::Error, fmt::Display};
 
@@ -36,13 +37,17 @@ pub async fn interface_configuration(interface: Interface) -> Result<(), Box<dyn
             // rmcp library for this arm
         },
         Interface::API => {
-            // gonna use Axum here
+            // gonna use Axum here, do not think I actually need this kind of interaction with the agent
         }
     }
 
     info!("Successfully used {} interface.", interface);
     Ok(())
 }
+
+// +--------------------------+
+// | PROCESSING CLI INTERFACE |
+// +--------------------------+
 
 async fn cli() -> Result<(), Box<dyn Error>> {
     text_commands("--start");
@@ -72,6 +77,7 @@ async fn cli() -> Result<(), Box<dyn Error>> {
                         "--gen" => {
                             // GENERATING THE PLAN BY THE GIVEN INPUT
                             println!("Enter your prompt for plan generation:");
+                            println!("Generating the plan...");
                             let mut prompt = String::new();
                             std::io::stdin().read_line(&mut prompt).expect("Failed to read line");
 
@@ -84,15 +90,28 @@ async fn cli() -> Result<(), Box<dyn Error>> {
                                 error!("Failed to set configuration file!");
                                 e
                             })?;
+
+                            info!("Using {} file.", arg);
+                            let file = std::fs::read_to_string(arg).expect("Failed to read config");
+                            let tasks: Vec<Task> = serde_json::from_str(&file).expect("Invalid config");
+
+                            let out_flag = command[2].trim();
+                            cat_plan(out_flag, arg).await;
+
+                            pipeline_execution_confirmation(tasks).await;
                         },
                         _ => {
-                            if command.len() < 3 {
+                            if command.len() < 4 {
                                 // USE EXISTED PLAN
+                                println!("Using {} file...", arg);
                                 info!("Using {} file.", arg);
                                 let file = std::fs::read_to_string(arg).expect("Failed to read config");
                                 let tasks: Vec<Task> = serde_json::from_str(&file).expect("Invalid config");
 
-                                execute_pipeline(tasks).await;
+                                let out_flag = command[2].trim();
+                                cat_plan(out_flag, arg).await;
+
+                                pipeline_execution_confirmation(tasks).await;
                             } else {
                                 println!("Too many arguments. You can only specify file or --gen fo plan generation.");
                                 continue;
@@ -100,6 +119,22 @@ async fn cli() -> Result<(), Box<dyn Error>> {
                         }
                     }
                 } else if command.trim().contains("-l") || command.trim().contains("--log") {
+                    let output = Command::new("cat")
+                        .arg("agent.log")
+                        .output()
+                        .await
+                        .expect("Failed to execute command");
+
+                    if output.status.success() {
+                        let stdout = String::from_utf8_lossy(&output.stdout);
+                        println!("\n\n+------------------------+");
+                        println!("|        LOG FILE        |");
+                        println!("+------------------------+\n");
+                        println!("{}", stdout);
+                    } else {
+                        let stderr = String::from_utf8_lossy(&output.stderr);
+                        eprintln!("Command failed: {}", stderr);
+                    }
 
                 } else {
                     println!("Unknown command");
@@ -115,7 +150,9 @@ async fn cli() -> Result<(), Box<dyn Error>> {
 fn text_commands(command: &str) {
     match command {
         "--start" => {
-            println!("\n\nDevOps Agent - Intelligent CI/CD Workflow Orchestration
+            println!("\n\n+-----------------------------------------------------------+");
+            println!("|  DevOps Agent - Intelligent CI/CD Workflow Orchestration  |
++-----------------------------------------------------------+\n
 
     Description:
     DevOps Agent is a context-aware automation tool designed to orchestrate complex CI/CD pipelines.
@@ -127,15 +164,59 @@ fn text_commands(command: &str) {
     through robust logging.");
         },
         "--commands" => {
-            println!("\n\nAvailable commands: ");
+            println!("\n\n+-----------------------+");
+            println!("|  Available commands:  |");
+            println!("+-----------------------+\n");
             println!("
-    -p, --plan 'file' or --gen   Generate or load the pland -gen flag for generate a plan, file to load the already existed plan
-    -l, --log <file>            Specify a custom log file (default: agent.log)
+    -p, --plan <file or --gen> <+out>   Generate or load the pland --gen flag for generate a plan, file to load the already existed plan, +out flag is used to output the plan at the end
+    -l, --log                           Print logs from the log file (agent.log)
     
-    -s, --start                 Information about the agent
-    -c, --commands              See all available commands
-    -q, --quit                  Quit the agent");
+    -s, --start                         Information about the agent
+    -c, --commands                      See all available commands
+    -q, --quit                          Quit the agent");
         }
         _ => (),
     }
+}
+
+
+pub async fn cat(path: &str) {
+    let output = Command::new("cat")
+        .arg(path)
+        .output()
+        .await
+        .expect("Failed to execute command");
+
+    if output.status.success() {
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        println!("{}", stdout);
+    } else {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        eprintln!("Command failed: {}", stderr);
+    }
+}
+
+pub async fn cat_plan(out_flag: &str, arg: &str) {
+    if out_flag == "+out" {
+        println!("\n\n+--------+");
+        println!("|  Plan  |");
+        println!("+--------+\n");
+        cat(arg).await;
+    }
+}
+
+pub async fn pipeline_execution_confirmation(tasks: Vec<Task>) {
+    println!("\n\nExecute pipeline (Y/N)?");
+    let mut ans = String::new();
+    std::io::stdin().read_line(&mut ans).expect("Failed to read line");
+    match ans.to_lowercase().trim() {
+        "y" => {
+            println!("Executing pipeline...");
+            execute_pipeline(tasks).await;
+        },
+        "n" => {
+            println!("NOT Executing pipeline");
+        }
+        _ => println!("Unavailable respond, using 'NO'"),
+        }
 }

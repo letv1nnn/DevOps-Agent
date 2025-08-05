@@ -1,8 +1,3 @@
-[2m2025-08-04T18:04:04.790691Z[0m [32m INFO[0m [2magent_core::task_receiving[0m[2m:[0m Using: CLI interface.
-[2m2025-08-04T18:05:07.773966Z[0m [32m INFO[0m [2magent_core::plan_generating[0m[2m:[0m Writing pipeline config to set_of_tasks.json
-[2m2025-08-04T18:05:07.774023Z[0m [32m INFO[0m [2magent_core::plan_generating[0m[2m:[0m Validating pipeline plan
-[2m2025-08-04T18:05:07.774073Z[0m [31mERROR[0m [2magent_core::plan_generating[0m[2m:[0m Failed to parse plan as JSON: expected value at line 1 column 2
-[2m2025-08-04T18:05:07.774125Z[0m [31mERROR[0m [2magent_core::plan_generating[0m[2m:[0m Failed to create file set_of_tasks.json: expected value at line 1 column 2
-[2m2025-08-04T18:05:07.774166Z[0m [31mERROR[0m [2magent_core::task_receiving[0m[2m:[0m Failed to set configuration file!
-[2m2025-08-04T18:05:07.774189Z[0m [31mERROR[0m [2magent_core::task_receiving[0m[2m:[0m Failed to use CLI interface
-[2m2025-08-04T18:05:07.774197Z[0m [32m INFO[0m [2magent_core::task_receiving[0m[2m:[0m Successfully used CLI interface.
+[2m2025-08-05T12:24:23.976793Z[0m [32m INFO[0m [2magent_core::task_receiving[0m[2m:[0m Using: CLI interface.
+[2m2025-08-05T12:27:01.071950Z[0m [32m INFO[0m [2magent_core::task_receiving[0m[2m:[0m Agent shutdown complete.
+[2m2025-08-05T12:27:01.072285Z[0m [32m INFO[0m [2magent_core::task_receiving[0m[2m:[0m Successfully used CLI interface.
