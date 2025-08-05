@@ -57,3 +57,10 @@ cargo build --release
 - GitHub/GitLab API integration.
 - LLM-based interpretation of build logs or error summarization.
 
+
+## Examples
+
+### CLI
+Examples of using CLI vinterface with DevOps Agent.
+
+![example of using the plan](example_images/image.png)
