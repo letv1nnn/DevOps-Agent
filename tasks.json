@@ -1,6 +1,16 @@
 [
   {
     "args": [
+      "clippy",
+      "--manifest-path",
+      "/home/letv1n/Projects/DevOps-Agent/Cargo.toml"
+    ],
+    "command": "cargo",
+    "retry_on_failure": false,
+    "task_type": "Lint"
+  },
+  {
+    "args": [
       "test",
       "--manifest-path",
       "/home/letv1n/Projects/DevOps-Agent/Cargo.toml"
@@ -12,9 +22,7 @@
   {
     "args": [
       "build",
-      "--release",
-      "--manifest-path",
-      "/home/letv1n/Projects/DevOps-Agent/Cargo.toml"
+      "--release"
     ],
     "command": "cargo",
     "retry_on_failure": false,

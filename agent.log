@@ -1,7 +1,5 @@
-[2m2025-08-07T16:41:19.405934Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mLint
-[2m2025-08-07T16:41:19.932593Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mLint [3moutput[0m[2m=[0m
-[2m2025-08-07T16:41:19.932665Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
-[2m2025-08-07T16:41:20.632662Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
+[2m2025-08-07T17:22:52.697759Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
+[2m2025-08-07T17:22:53.019683Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
 running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
@@ -28,8 +26,12 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
 
-[2m2025-08-07T16:51:11.572800Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
-[2m2025-08-07T16:51:13.750654Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
+[2m2025-08-07T17:22:53.019756Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mBuild
+[2m2025-08-07T17:22:53.211540Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mBuild [3moutput[0m[2m=[0m
+[2m2025-08-07T17:31:05.257085Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mLint
+[2m2025-08-07T17:31:06.665173Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mLint [3moutput[0m[2m=[0m
+[2m2025-08-07T17:31:06.665258Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
+[2m2025-08-07T17:31:08.188179Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
 running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
@@ -56,5 +58,5 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
 
-[2m2025-08-07T16:51:13.750712Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mBuild
-[2m2025-08-07T16:51:18.078582Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mBuild [3moutput[0m[2m=[0m
+[2m2025-08-07T17:31:08.188368Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mBuild
+[2m2025-08-07T17:31:12.222029Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mBuild [3moutput[0m[2m=[0m
