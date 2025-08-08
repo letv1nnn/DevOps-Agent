@@ -1,31 +1,14 @@
 [
   {
     "args": [
-      "clippy",
-      "--manifest-path",
-      "/home/letv1n/Projects/DevOps-Agent/Cargo.toml"
+      "all"
     ],
-    "command": "cargo",
-    "retry_on_failure": false,
-    "task_type": "Lint"
-  },
-  {
-    "args": [
-      "test",
-      "--manifest-path",
-      "/home/letv1n/Projects/DevOps-Agent/Cargo.toml"
+    "command": "make",
+    "dirs": [
+      "/home/letv1n/Projects/DevOps-Agent",
+      "/home/letv1n/C/MALLOC"
     ],
-    "command": "cargo",
     "retry_on_failure": true,
-    "task_type": "Test"
-  },
-  {
-    "args": [
-      "build",
-      "--release"
-    ],
-    "command": "cargo",
-    "retry_on_failure": false,
     "task_type": "Build"
   }
 ]

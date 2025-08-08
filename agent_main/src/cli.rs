@@ -100,19 +100,24 @@ pub async fn cli_agent_interaction() -> Result<(), Box<dyn Error>> {
             },
             _ => {
                 if user_command.len() == 2 && user_command[0] == "--execute" {
-                    println!("{}\nExecuting plan...It might take some time.", AGENT_PLAN_EXE);
-                    let start = Instant::now();
-
                     read_and_exec_plan(user_command[1]).await;
-                    
-                    let duration = start.elapsed();
-                    println!("The given plan has been executed.\nExecution took {:?}.", duration);
-                    println!("You might want to review logs, enter -l or --log command to see logs.");
                 } else if user_command.len() == 2 && (user_command[0] == "-p" || user_command[0] == "--plan") {
-                    match shell_cat(user_command[1]).await {
-                        Ok(logs) => println!("{}\n{}", AGENT_PLAN, logs),
-                        Err(e) => println!("ERROR: {}", e),
-                    };
+                    let path = std::path::Path::new("example.txt");
+
+                    match tokio::fs::metadata(path).await {
+                        Ok(_) => {
+                            match shell_cat(user_command[1]).await {
+                                Ok(logs) => println!("{}\n{}", AGENT_PLAN, logs),
+                                Err(e) => println!("ERROR: {}", e),
+                            };
+                        },
+                        Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
+                            println!("File does not exist.");
+                        }
+                        Err(err) => {
+                            println!("Error checking file: {}", err);
+                        }
+                    }
                 } else if user_command.len() >= 2 && (user_command[0] == "-s" || user_command[0] == "--shell") {
                     let command = user_command[1];
                     if user_command.len() > 2 {
@@ -149,7 +154,7 @@ fn user_input() -> String {
     user_input.to_lowercase()
 }    
 
-async fn shell_cat(path: &str) -> Result<String, String>{
+async fn shell_cat(path: &str) -> Result<String, String>{ 
     match Command::new("cat")
         .arg(&path)
         .output()
@@ -161,10 +166,17 @@ async fn shell_cat(path: &str) -> Result<String, String>{
 
 // need to add the project specification, mandatory!
 async fn read_and_exec_plan(path: &str) {
-    let file = std::fs::read_to_string(path).expect("Failed to read config");
-    let tasks: Vec<Task> = serde_json::from_str(&file).expect("Invalid config");
-    
-    execute_pipeline(tasks).await;
+    if let Ok(file) = std::fs::read_to_string(path) {
+        println!("{}\nExecuting plan...It might take some time.", AGENT_PLAN_EXE);
+        let start = Instant::now();
+        let tasks: Vec<Task> = serde_json::from_str(&file).expect("Invalid config");
+        execute_pipeline(tasks).await;
+        let duration = start.elapsed();
+        println!("The given plan has been executed.\nExecution took {:?}.", duration);
+        println!("You might want to review logs, enter -l or --log command to see logs.");
+    } else {
+        println!("Incorrect file path!");
+    };
 }    
 
 async fn execute_shell_command(command: String, args: Vec<String>) -> Result<String, String> {

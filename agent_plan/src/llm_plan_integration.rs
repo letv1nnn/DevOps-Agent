@@ -4,6 +4,7 @@ use serde::ser::StdError;
 use serde_json::Value;
 use tokio::fs::File;
 use tokio::io::AsyncWriteExt;
+use tokio::process::Command;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct LLMessage {
@@ -36,9 +37,9 @@ Example:
 User prompt: Lint and test rust /home/letv1n/Projects/DevOps-Agent/Cargo.toml project. Then, build a Docker image tagged my_app using docker build.
 LLM output:
 [
-    {"task_type" : "Lint", "command" : "cargo", "args" : ["clippy", "--manifest-path", "/home/letv1n/Projects/DevOps-Agent/Cargo.toml"], "retry_on_failure" : false },
-    {"task_type" : "Test", "command" : "cargo", "args" : ["test", "--manifest-path", "/home/letv1n/Projects/DevOps-Agent/Cargo.toml"], "retry_on_failure" : true },
-    {"task_type" : "Build", "command" : "docker", "args" : ["build", "-t", "my_app", "."], "retry_on_failure" : false }
+    {"task_type" : "Lint", "command" : "cargo", "args" : ["clippy"], "retry_on_failure" : false, "dirs": ["curr dir", "/home/letv1n/Projects/DevOps-Agent/Cargo.toml"] },
+    {"task_type" : "Test", "command" : "cargo", "args" : ["test"], "retry_on_failure" : true, "dirs": ["curr dir", "/home/letv1n/Projects/DevOps-Agent/Cargo.toml"] },
+    {"task_type" : "Build", "command" : "docker", "args" : ["build", "-t", "my_app", "."], "retry_on_failure" : false, dirs: [] }
 ]
 
 USER PROMPT:
@@ -97,27 +98,53 @@ async fn llm_prompt_validation(plan: &str) -> Result<Vec<Value>, Box<dyn std::er
             e
         })?;
 
-    let tasks = parsed
+    let mut tasks = parsed
         .as_array()
         .ok_or("Plan must be a JSON array")?
         .to_vec();
 
-    for (i, task) in tasks.iter().enumerate() {
-        let task_obj = task.as_object().ok_or(format!("Task {} is not an object", i))?;
+    for (i, task) in tasks.iter_mut().enumerate() {
+        let task_obj = task.as_object_mut().ok_or(format!("Task {} is not an object", i))?;
 
-        if !task_obj.contains_key("task_type") {
-            return Err(format!("Task {} missing 'task_type' field", i).into());
+        let json_keys = vec!["task_type", "command", "retry_on_failure", "dirs", "args"];
+
+        for key in json_keys {
+            if !task_obj.contains_key(key) {
+                return Err(format!("Task {} missing {} field", i, key).into());
+            }
         }
 
-        if !task_obj.contains_key("command") {
-            return Err(format!("Task {} missing 'command' field", i).into());
+        let curr_dir = Command::new("pwd")
+            .output()
+            .await?;
+
+        let curr_dir_str = String::from_utf8(curr_dir.stdout)?.trim().to_string();
+
+        if let Some(dirs) = task_obj.get_mut("dirs").and_then(|v| v.as_array_mut()) {
+            if !dirs.is_empty() {
+                dirs[0] = Value::String(curr_dir_str.clone());
+            }
         }
-    
+        
         if let Some(task_type) = task_obj.get("task_type") {
             let valid_types = ["Lint", "Test", "Build", "Deploy", "Rollback"];
             let type_str = task_type.as_str().ok_or("task_type must be a string")?;
             if !valid_types.contains(&type_str) {
                 return Err(format!("Invalid task_type '{}' in task {}", type_str, i).into());
+            }
+        }
+
+        if let Some(command) = task_obj.get("command") {
+            let forbidden_commands: Vec<&'static str> = vec![
+                "rm", "mv", "dd", "mkfs", "shutdown", "reboot", "halt",
+                "poweroff", "chmod", "chown", "kill", "pkill", "killall",
+                "useradd", "userdel", "passwd", "mount", "umount",
+                "iptables", "ufw", "curl", "wget", "scp", "ftp",
+                "nc", "netcat", "telnet", "bash", "sh",
+            ];
+            let command_str = command.as_str().ok_or("command must be a string")?;
+            if forbidden_commands.contains(&command_str) {
+                return Err(format!("Can proceed Task {}, because LLM generated forbidden or unsafe command: {}", i, command_str).into());
             }
         }
     }
