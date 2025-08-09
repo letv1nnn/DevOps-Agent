@@ -62,7 +62,7 @@ const AGENT_SHELL_COMMAND_INVOCATION: &str = "\n
 +----------------------------+
 ";
 
-pub async fn cli_agent_interaction() -> Result<(), Box<dyn Error>> {
+pub async fn cli_agent_interaction() -> Result<(), Box<dyn Error + Send + Sync>> {
     println!("{}", AGENT_INFO);
     println!("{}", AGENT_CLI_COMMANDS);
     loop {
@@ -86,23 +86,44 @@ pub async fn cli_agent_interaction() -> Result<(), Box<dyn Error>> {
                 println!("{}\nEnter a prompt:", AGENT_PLAN_GENERATION);
                 let mut prompt = String::new();
                 std::io::stdin().read_line(&mut prompt).expect("Failed to read line!");
-                println!("It might take some time...");
-                let start = Instant::now();
+                
+                println!("Plan generation started in background...");
+                println!("The message will pop up when the plan will be ready!");
 
-                match send_request(prompt.as_str()).await {
-                    Ok(resp) => write_prompt_to_json_file("tasks.json", resp.as_str()).await?,
-                    Err(e) => eprintln!("{}", e),
-                };
+                let prompt_clone = prompt.clone();
+                let start: Instant = Instant::now();
 
-                let duration = start.elapsed();
-                println!("Generated plan is moved to tasks.json file for future execution.");
-                println!("Plan generation took {:?}", duration);
+                let handle = tokio::spawn(async move {
+                    
+                    match send_request(prompt_clone.as_str()).await {
+                        Ok(resp) => {
+                            if let Err(e) = write_prompt_to_json_file("tasks.json", resp.as_str()).await {
+                                eprintln!("Error writing tasks.json: {}", e);
+                            } else {
+                                println!("\nGenerated plan is saved to tasks.json.");
+                            }
+                        }
+                        Err(e) => eprintln!("LLM error: {}", e),
+                    };
+                    
+                });
+                
+                match handle.await {
+                    Ok(_) => {
+                        let duration = start.elapsed();
+                        println!("Generated plan is moved to tasks.json file for future execution.");
+                        println!("Plan generation took {:?}", duration);
+                    },
+                    Err(e) => {
+                        eprintln!("Task failed: {}", e);
+                    }
+                }
             },
             _ => {
                 if user_command.len() == 2 && user_command[0] == "--execute" {
                     read_and_exec_plan(user_command[1]).await;
                 } else if user_command.len() == 2 && (user_command[0] == "-p" || user_command[0] == "--plan") {
-                    let path = std::path::Path::new("example.txt");
+                    let path = std::path::Path::new(user_command[1]);
 
                     match tokio::fs::metadata(path).await {
                         Ok(_) => {

@@ -1,14 +1,39 @@
 [
   {
     "args": [
-      "all"
+      "clippy"
     ],
-    "command": "make",
+    "command": "cargo",
     "dirs": [
       "/home/letv1n/Projects/DevOps-Agent",
-      "/home/letv1n/C/MALLOC"
+      "/home/letv1n/Projects/DevOps-Agent"
+    ],
+    "retry_on_failure": false,
+    "task_type": "Lint"
+  },
+  {
+    "args": [
+      "test"
+    ],
+    "command": "cargo",
+    "dirs": [
+      "/home/letv1n/Projects/DevOps-Agent",
+      "/home/letv1n/Projects/DevOps-Agent"
     ],
     "retry_on_failure": true,
+    "task_type": "Test"
+  },
+  {
+    "args": [
+      "build",
+      "--release"
+    ],
+    "command": "cargo",
+    "dirs": [
+      "/home/letv1n/Projects/DevOps-Agent",
+      "/home/letv1n/Projects/DevOps-Agent"
+    ],
+    "retry_on_failure": false,
     "task_type": "Build"
   }
 ]

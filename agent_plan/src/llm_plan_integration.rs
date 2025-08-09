@@ -33,6 +33,7 @@ IMPORTANT:
     1. Your response must be a raw JSON array only. Do NOT include any explanation or markdown formatting (like ```json or ```)!
     2. Each of the tasks must have "task_type", "command", "args" and "retry_on_failure" keys, you must include them!
     3. If user specified the project, you need to add appropriate arguments, for instance for cargo it's --manifest-path /home/letv1n/Projects/DevOps-Agent
+    4. "dirs" must be of length 2 in the .json plan.
 Example:
 User prompt: Lint and test rust /home/letv1n/Projects/DevOps-Agent/Cargo.toml project. Then, build a Docker image tagged my_app using docker build.
 LLM output:
@@ -45,7 +46,7 @@ LLM output:
 USER PROMPT:
 "#;
 
-pub async fn send_request(promt: &str) -> Result<String, Box<dyn StdError>> {
+pub async fn send_request(promt: &str) -> Result<String, Box<dyn StdError + Sync + Send>> {
     let client = Client::new();
 
     let messages = vec![
@@ -91,7 +92,7 @@ pub async fn send_request(promt: &str) -> Result<String, Box<dyn StdError>> {
 }
 
 
-async fn llm_prompt_validation(plan: &str) -> Result<Vec<Value>, Box<dyn std::error::Error>> {
+async fn llm_prompt_validation(plan: &str) -> Result<Vec<Value>, Box<dyn std::error::Error + Send + Sync>> {
     let parsed: Value = serde_json::from_str(plan)
         .map_err(|e| {
             eprintln!("Failed to parse plan as JSON: {}", e);
@@ -153,7 +154,7 @@ async fn llm_prompt_validation(plan: &str) -> Result<Vec<Value>, Box<dyn std::er
 }
 
 
-pub async fn write_prompt_to_json_file(path: &str, plan: &str) -> Result<(), Box<dyn std::error::Error>> {
+pub async fn write_prompt_to_json_file(path: &str, plan: &str) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let validated_plan = llm_prompt_validation(plan).await.map_err(|e| {
         eprintln!("Failed to create file {}: {}", path, e);
         e
