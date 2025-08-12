@@ -9,8 +9,11 @@ members = [
 tokio = { version = "1.47.1", features = ["full"] }
 serde = { version = "1.0.218", features = ["derive"] }
 serde_json = { version = "1.0.139" }
-rmcp = { version = "0.4.0", features = ["transport-io"] }
+rmcp = { version = "0.5.0", features = ["transport-io"] }
 tracing = { version = "0.1.41" }
 tracing-subscriber = { version = "0.3" }
 reqwest = { version = "0.12.22", features = ["json"] }
 clap = { version = "4.5.42", features = ["derive"] }
+tempfile = { version = "3.20.0" }
+tracing-test = "0.2"
+tokio-util = { version = "0.7", features = ["time"] }

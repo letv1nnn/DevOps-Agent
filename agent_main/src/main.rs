@@ -17,8 +17,9 @@ use clap::Parser;
 use crate::logging::init_logging;
 use crate::cli::cli_agent_interaction;
 
-pub mod logging;
-pub mod cli;
+mod logging;
+mod cli;
+mod mcp;
 
 #[tokio::main]
 async fn main() {

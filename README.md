@@ -77,6 +77,7 @@ cargo clean # removes /target directory
 When you run the CLI version of the agent, it first displays a short description and lists all available commands.
 
 ### CLI Example 
+I used different Linux and Windows machine to test it.
 In this example, I’ll lint, test, and build the agent in release mode.
 I don’t want to create a plan manually, so I’ll ask the LLM to generate one for me by passing the ***--generate*** command. Depending on your hardware, the LLM will create a plan in 0.3–3 minutes when using the ***mistral*** model.
 
@@ -86,3 +87,8 @@ You can inspect the LLM-generated plan before executing it.
 If you’re concerned about security—such as the risk of a malicious ***rm -rf*** command—the agent validates commands before execution to prevent unsafe actions.
 
 ![alt text](images/generate_and_execute_plan_example.png)
+
+
+Second example where I just run a plan and output the log messages
+
+![alt text](images/plan_execution_example.png)

@@ -97,7 +97,7 @@ pub async fn send_request(promt: &str) -> Result<String, Box<dyn StdError + Sync
 }
 
 
-async fn llm_prompt_validation(plan: &str) -> Result<Vec<Value>, Box<dyn std::error::Error + Send + Sync>> {
+pub async fn llm_prompt_validation(plan: &str) -> Result<Vec<Value>, Box<dyn std::error::Error + Send + Sync>> {
     let parsed: Value = serde_json::from_str(plan)
         .map_err(|e| {
             eprintln!("Failed to parse plan as JSON: {}", e);
@@ -189,7 +189,7 @@ pub async fn write_prompt_to_json_file(path: &str, plan: &str) -> Result<(), Box
 }
 
 
-fn sanitize_llm_response(resp: &str) -> &str {
+pub fn sanitize_llm_response(resp: &str) -> &str {
     resp.trim()
         .strip_prefix("```json")
         .or_else(|| resp.strip_prefix("```")) 
