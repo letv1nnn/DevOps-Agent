@@ -68,6 +68,7 @@ pub async fn cli_agent_interaction() -> Result<(), Box<dyn Error + Send + Sync>>
     loop {
         let user_input = user_input();
         let user_command: Vec<&str> = user_input.split_whitespace().collect();
+
         match user_command[0] {
             "-i" | "--info" => println!("{}", AGENT_INFO),
             "-q" | "--quit" => {
@@ -87,7 +88,7 @@ pub async fn cli_agent_interaction() -> Result<(), Box<dyn Error + Send + Sync>>
                 let mut prompt = String::new();
                 std::io::stdin().read_line(&mut prompt).expect("Failed to read line!");
                 
-                println!("Plan generation started in background...");
+                // println!("Plan generation started in background...");
                 println!("The message will pop up when the plan will be ready!");
 
                 let prompt_clone = prompt.clone();
@@ -97,8 +98,10 @@ pub async fn cli_agent_interaction() -> Result<(), Box<dyn Error + Send + Sync>>
                     
                     match send_request(prompt_clone.as_str()).await {
                         Ok(resp) => {
+                            // println!("{}", resp);
+                            
                             if let Err(e) = write_prompt_to_json_file("tasks.json", resp.as_str()).await {
-                                eprintln!("Error writing tasks.json: {}", e);
+                                eprintln!("Failed while writing tasks.json due: {}", e);
                             } else {
                                 println!("\nGenerated plan is saved to tasks.json.");
                             }
@@ -124,7 +127,7 @@ pub async fn cli_agent_interaction() -> Result<(), Box<dyn Error + Send + Sync>>
                     read_and_exec_plan(user_command[1]).await;
                 } else if user_command.len() == 2 && (user_command[0] == "-p" || user_command[0] == "--plan") {
                     let path = std::path::Path::new(user_command[1]);
-
+                        
                     match tokio::fs::metadata(path).await {
                         Ok(_) => {
                             match shell_cat(user_command[1]).await {

@@ -27,6 +27,8 @@ solve the issue with async tasks, for now, it's specifically the --generation ca
 
 check if any of the json keys is not empty, I need to implement a retry for a failed plan generation in order to jus send a failed response.
 
+if I executes something twice, it appends logs from the execution to the old logs.
+
 
 ## Preinstallation
 

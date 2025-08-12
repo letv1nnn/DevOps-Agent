@@ -8,7 +8,7 @@ use crate::task_types_and_workflow_steps::Task;
 pub async fn run_task(task: &Task) -> Result<String, String> {
     let child = Command::new(&task.command)
         .args(&task.args)
-        .current_dir(&task.dirs.1)
+        .current_dir(&task.dir)
         .output();
 
     let output = timeout(Duration::from_secs(30), child).await;

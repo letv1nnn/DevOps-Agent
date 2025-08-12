@@ -17,6 +17,6 @@ pub struct Task {
     pub command: String,
     pub args: Vec<String>,
     pub retry_on_failure: bool,
-    pub dirs: (String, String),
+    pub dir: String,
 }
 
