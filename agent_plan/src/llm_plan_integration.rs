@@ -34,10 +34,8 @@ because user is going to provide only task_type and programming language that he
 Task types can be only Lint, Test, Build, Deploy or Rollback. The command must be a valid command for the task type and args must be a vector of strings.
 IMPORTANT: 
     1. Your response must be a raw JSON array only. Do NOT include any explanation or markdown formatting (like ```json or ```)!
-    2. Each of the tasks must have "task_type", "command", "args" and "retry_on_failure" keys, you must include them!
-    3. If user specified the project, you need to add appropriate arguments, for instance for cargo it's --manifest-path /home/letv1n/Projects/DevOps-Agent
-    4. if user has said to do something in the current directory, just put curr in the dirs value, like dir: "curr".
-    5. your response MUST have strictly 5 fields: "task_type" : "String", "command" : "String", "args" : [vector], "retry_on_failure" : bool, "dir": String
+    2. if user has said to do something in the current directory, just put curr in the dirs value, like dir: "curr".
+    3. your response MUST have strictly 5 fields: "task_type" : "String", "command" : "String", "args" : [vector], "retry_on_failure" : bool, "dir": String
 Example:
 User prompt: Lint and test rust /home/letv1n/Projects/DevOps-Agent/Cargo.toml project. Then, build a Docker image tagged my_app using docker build.
 LLM output:

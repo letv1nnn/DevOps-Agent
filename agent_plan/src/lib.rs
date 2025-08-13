@@ -4,3 +4,4 @@ pub mod secure_task_execution;
 pub mod task_pipeline_execution;
 pub mod llm_plan_integration;
 pub mod rollback_handling;
+pub mod deployment_processing;

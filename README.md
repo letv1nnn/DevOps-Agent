@@ -64,7 +64,7 @@ cargo build --release
 1. add .exe extension to the path if you use Windows OS
 2. you can use cli, api or mcp argument (currently only cli version available).
 ```bash
-./target/release/agent_main --interface CLI
+./target/release/agent --interface CLI
 ```
 
 ***Clean***
@@ -92,3 +92,7 @@ If you’re concerned about security—such as the risk of a malicious ***rm -rf
 Second example where I just run a plan and output the log messages
 
 ![alt text](images/plan_execution_example.png)
+
+Example of failed testing that was repeated and succeed
+
+![alt text](images/task_repeating_example.png)

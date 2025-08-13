@@ -1,13 +1,23 @@
-[2m2025-08-12T22:33:13.270701Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m 
+[2m2025-08-13T16:02:42.209747Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m 
 
 +----------------------------------------+
 |Starting pipeline execution with 3 tasks|
 +----------------------------------------+
-[2m2025-08-12T22:33:13.270808Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mLint
-[2m2025-08-12T22:33:14.110220Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mLint [3moutput[0m[2m=[0m
-[2m2025-08-12T22:33:14.110255Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
-[2m2025-08-12T22:33:14.110265Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
-[2m2025-08-12T22:33:16.059165Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
+[2m2025-08-13T16:02:42.209937Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mLint
+[2m2025-08-13T16:02:43.241374Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mLint [3moutput[0m[2m=[0m
+[2m2025-08-13T16:02:43.241500Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
+[2m2025-08-13T16:02:43.241522Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
+[2m2025-08-13T16:02:45.551719Z[0m [31mERROR[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task failed [3mtask[0m[2m=[0mTest [3merror[0m[2m=[0m   Compiling agent_plan v0.1.0 (/home/letv1n/Projects/DevOps-Agent/agent_plan)
+   Compiling agent v0.1.0 (/home/letv1n/Projects/DevOps-Agent/agent_main)
+   Compiling agent_tests v0.1.0 (/home/letv1n/Projects/DevOps-Agent/agent_tests)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.19s
+     Running unittests src/main.rs (target/debug/deps/agent-09a8ea211afc42c5)
+     Running unittests src/lib.rs (target/debug/deps/agent_plan-bb7e0eac2a4c55aa)
+     Running unittests src/lib.rs (target/debug/deps/agent_tests-594730f80069246e)
+error: test failed, to rerun pass `-p agent_tests --lib`
+
+[2m2025-08-13T16:02:45.551806Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Retrying task after failure
+[2m2025-08-13T16:02:45.943006Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Retry successful [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
 running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
@@ -22,8 +32,8 @@ running 6 tests
 test tests::task_types_tests::test_task_type_serialization ... ok
 test tests::task_types_tests::test_task_deserialization ... ok
 test tests::llm_plan_integration_tests::test_sanitize_llm_response ... ok
-test tests::llm_plan_integration_tests::test_llm_prompt_validation_valid ... ok
 test tests::llm_plan_integration_tests::test_llm_prompt_validation_invalid ... ok
+test tests::llm_plan_integration_tests::test_llm_prompt_validation_valid ... ok
 test tests::llm_plan_integration_tests::test_write_prompt_to_json_file ... ok
 
 test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
@@ -39,7 +49,6 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
 
-[2m2025-08-12T22:33:16.059200Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
-[2m2025-08-12T22:33:16.059210Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mBuild
-[2m2025-08-12T22:33:16.541452Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mBuild [3moutput[0m[2m=[0m
-[2m2025-08-12T22:33:16.541486Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
+[2m2025-08-13T16:02:45.943091Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mBuild
+[2m2025-08-13T16:02:50.434229Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mBuild [3moutput[0m[2m=[0m
+[2m2025-08-13T16:02:50.434293Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed

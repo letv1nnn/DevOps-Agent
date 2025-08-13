@@ -24,7 +24,16 @@ pub async fn execute_pipeline(tasks: Vec<Task>) {
 
                 if task.retry_on_failure {
                     info!("Retrying task after failure");
-                    let _ = run_task(&task).await;
+                    match run_task(&task).await {
+                        Ok(output) => {
+                            info!(task = ?task.task_type, output = %output, "Retry successful");
+                        },
+                        Err(retry_err) => {
+                            error!(task = ?task.task_type, error = %retry_err, "Retry failed");
+                            info!("Halting pipeline execution due to retry failure");
+                            break;
+                        }
+                    }
                 } else {
                     error!("Halting pipeline due to failure");
                     break;
