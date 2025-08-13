@@ -30,6 +30,12 @@ check if any of the json keys is not empty, I need to implement a retry for a fa
 if I executes something twice, it appends logs from the execution to the old logs.
 
 
+## Essential Information
+Take these into account:
+- DevOps Agent uses git version control when registring the current version of the deployemnt. I'm goint to add the Mercurial and SVN models support.
+- Current implementation uses ***mistral*** Ollama model, consider this and if you have a 16+ gb of RAM, use much faster models.
+
+
 ## Preinstallation
 
 You primarily need to install [rust](https://www.rust-lang.org/tools/install) compiler. 

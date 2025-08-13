@@ -1,23 +1,65 @@
-[2m2025-08-13T16:02:42.209747Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m 
+[2m2025-08-13T16:59:46.500990Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m 
 
 +----------------------------------------+
 |Starting pipeline execution with 3 tasks|
 +----------------------------------------+
-[2m2025-08-13T16:02:42.209937Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mLint
-[2m2025-08-13T16:02:43.241374Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mLint [3moutput[0m[2m=[0m
-[2m2025-08-13T16:02:43.241500Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
-[2m2025-08-13T16:02:43.241522Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
-[2m2025-08-13T16:02:45.551719Z[0m [31mERROR[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task failed [3mtask[0m[2m=[0mTest [3merror[0m[2m=[0m   Compiling agent_plan v0.1.0 (/home/letv1n/Projects/DevOps-Agent/agent_plan)
-   Compiling agent v0.1.0 (/home/letv1n/Projects/DevOps-Agent/agent_main)
-   Compiling agent_tests v0.1.0 (/home/letv1n/Projects/DevOps-Agent/agent_tests)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.19s
+[2m2025-08-13T16:59:46.501106Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mLint
+[2m2025-08-13T16:59:46.988925Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mLint [3moutput[0m[2m=[0m
+[2m2025-08-13T16:59:46.988975Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
+[2m2025-08-13T16:59:46.988982Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
+[2m2025-08-13T16:59:47.607678Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 6 tests
+test tests::task_types_tests::test_task_deserialization ... ok
+test tests::task_types_tests::test_task_type_serialization ... ok
+test tests::llm_plan_integration_tests::test_sanitize_llm_response ... ok
+test tests::llm_plan_integration_tests::test_llm_prompt_validation_valid ... ok
+test tests::llm_plan_integration_tests::test_llm_prompt_validation_invalid ... ok
+test tests::llm_plan_integration_tests::test_write_prompt_to_json_file ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+[2m2025-08-13T16:59:47.607735Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
+[2m2025-08-13T16:59:47.607749Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mBuild
+[2m2025-08-13T16:59:52.433889Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mBuild [3moutput[0m[2m=[0m
+[2m2025-08-13T16:59:52.433955Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
+[2m2025-08-13T17:00:51.541169Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m 
+
++----------------------------------------+
+|Starting pipeline execution with 3 tasks|
++----------------------------------------+
+[2m2025-08-13T17:00:51.541288Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mLint
+[2m2025-08-13T17:00:52.004256Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mLint [3moutput[0m[2m=[0m
+[2m2025-08-13T17:00:52.004314Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
+[2m2025-08-13T17:00:52.004341Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mTest
+[2m2025-08-13T17:00:52.266479Z[0m [31mERROR[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task failed [3mtask[0m[2m=[0mTest [3merror[0m[2m=[0m    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.18s
      Running unittests src/main.rs (target/debug/deps/agent-09a8ea211afc42c5)
      Running unittests src/lib.rs (target/debug/deps/agent_plan-bb7e0eac2a4c55aa)
      Running unittests src/lib.rs (target/debug/deps/agent_tests-594730f80069246e)
 error: test failed, to rerun pass `-p agent_tests --lib`
 
-[2m2025-08-13T16:02:45.551806Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Retrying task after failure
-[2m2025-08-13T16:02:45.943006Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Retry successful [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
+[2m2025-08-13T17:00:52.266543Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Retrying task after failure
+[2m2025-08-13T17:00:52.591968Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Retry successful [3mtask[0m[2m=[0mTest [3moutput[0m[2m=[0m
 running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
@@ -36,7 +78,7 @@ test tests::llm_plan_integration_tests::test_llm_prompt_validation_invalid ... o
 test tests::llm_plan_integration_tests::test_llm_prompt_validation_valid ... ok
 test tests::llm_plan_integration_tests::test_write_prompt_to_json_file ... ok
 
-test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
 
 
 running 0 tests
@@ -49,6 +91,6 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
 
-[2m2025-08-13T16:02:45.943091Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mBuild
-[2m2025-08-13T16:02:50.434229Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mBuild [3moutput[0m[2m=[0m
-[2m2025-08-13T16:02:50.434293Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed
+[2m2025-08-13T17:00:52.592048Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Starting task [3mtask[0m[2m=[0mBuild
+[2m2025-08-13T17:00:52.831843Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed [3mtask[0m[2m=[0mBuild [3moutput[0m[2m=[0m
+[2m2025-08-13T17:00:52.831898Z[0m [32m INFO[0m [2magent_plan::task_pipeline_execution[0m[2m:[0m Task completed

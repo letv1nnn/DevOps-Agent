@@ -3,6 +3,9 @@ use tokio::{fs::write, process::Command};
 
 // this file is used to process deployment tasks
 
+// definitely need to add some docker handling here
+
+
 pub async fn get_current_version(dir: &str) -> Result<String, String> {
 
     let git_result = Command::new("git")
@@ -19,8 +22,7 @@ pub async fn get_current_version(dir: &str) -> Result<String, String> {
         }
     }
 
-    // implement similar logic for other version control systems
-    // definitely need to add some docker handling here
+    // implement similar logic for other version control systems like Mercurial, SVN, etc.
     // for now, just return a timestamp as a placeholder
 
     Ok(chrono::Local::now().format("%Y%m%d%H%M%S").to_string())
