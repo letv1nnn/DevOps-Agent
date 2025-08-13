@@ -2,7 +2,7 @@ use tokio::process::Command;
 use std::time::Duration;
 use tokio::time::timeout;
 
-use crate::task_types_and_workflow_steps::Task;
+use crate::task_types_and_workflow_steps::{Task, TaskType};
 
 
 pub async fn run_task(task: &Task) -> Result<String, String> {
@@ -12,6 +12,13 @@ pub async fn run_task(task: &Task) -> Result<String, String> {
         .output();
 
     let output = timeout(Duration::from_secs(30), child).await;
+
+    if let TaskType::Deploy = task.task_type {
+        // need to handle deploy
+    }
+    if let TaskType::Rollback = task.task_type {
+        // need to handle rollback functionality
+    }
 
     match output {
         Ok(Ok(out)) if out.status.success() => {
