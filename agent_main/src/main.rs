@@ -16,6 +16,7 @@ use clap::Parser;
 
 use crate::logging::init_logging;
 use crate::cli::cli_agent_interaction;
+use crate::mcp::run_server;
 
 mod logging;
 mod cli;
@@ -29,12 +30,20 @@ async fn main() {
 
     match args.interface.trim().to_lowercase().as_str() {
         "cli" => {
+            // I was thinking to implement a Tauri APP and integrate some parts from the CLI into it
+            println!("Running CLI agent...");
             let _ = cli_agent_interaction().await.map_err(|e| {
                 println!("FAILED to interact with CLI: {e}");
             });
         },
-        "mcp" => {},
-        "api" => {},
+        "mcp" => {
+            println!("Running MCP sevrer...");
+            run_server().await;
+        },
+        "api" => {
+            // I do not know about this one yet, but it is planned
+            println!("Running API server...");
+        },
         _ => {
             println!("User can only use CLI based agent, MCP server or API calls");
         },

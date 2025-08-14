@@ -29,6 +29,7 @@ check if any of the json keys is not empty, I need to implement a retry for a fa
 
 if I executes something twice, it appends logs from the execution to the old logs.
 
+create a user interface with Tauri and TypeScript for the agent, CLI/UI based.
 
 ## Essential Information
 Take these into account:
