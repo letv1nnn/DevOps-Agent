@@ -178,7 +178,7 @@ fn user_input() -> String {
     user_input.to_lowercase()
 }    
 
-async fn shell_cat(path: &str) -> Result<String, String>{ 
+pub async fn shell_cat(path: &str) -> Result<String, String>{ 
     match Command::new("cat")
         .arg(&path)
         .output()

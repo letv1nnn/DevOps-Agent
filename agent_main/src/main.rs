@@ -37,8 +37,11 @@ async fn main() {
             });
         },
         "mcp" => {
-            println!("Running MCP sevrer...");
-            run_server().await;
+            if let Ok(_) = run_server().await {
+                println!("MCP server started successfully.");
+            } else {
+                println!("Failed to start MCP server.");
+            }
         },
         "api" => {
             // I do not know about this one yet, but it is planned
