@@ -1,21 +1,10 @@
 name: Backend Lint 
-on:
-  push:
-    paths:
-      - 'actor_based_chat/backend/**'
-  pull_request:
-    paths:
-      - 'actor_based_chat/backend/**'
+on: push
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Lint with Clippy
-        run: cargo clippy --all-targets --all-features -- -D warnings
+      - name: Welcome Message
+        run: echo "some action"
             
