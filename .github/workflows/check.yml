@@ -2,10 +2,10 @@ name: Backend Lint
 on:
   push:
     paths:
-      - 'backend/**'
+      - 'actor_based_chat/backend/**'
   pull_request:
     paths:
-      - 'backend/**'
+      - 'actor_based_chat/backend/**'
 
 jobs:
   lint:
