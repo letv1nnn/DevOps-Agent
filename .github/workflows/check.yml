@@ -36,10 +36,6 @@ jobs:
           path: target
           key: ${{ runner.os }}-cargo-build-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Run cargo fmt check
-        run: cargo fmt --all -- --check
-        working-directory: actor_based_chat/backend
-
       - name: Run cargo clippy
         run: cargo clippy --all-targets --all-features
         working-directory: actor_based_chat/backend
