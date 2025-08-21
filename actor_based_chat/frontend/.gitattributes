@@ -1,3 +1,0 @@
-dist/* linguist-vendored=false
-dist/*.ts linguist-detectable=true
-dist/*.js linguist-detectable=true
