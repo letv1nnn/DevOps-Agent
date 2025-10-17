@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: devops-agent
+
+spec:
+  selector:
+    matchLabels:
+      agent: devops-agent
+  template:
+    metadata:
+      labels:
+        agent: devops-agent
+    spec:
+      containers:
+        - name: devops-agent
+          image: devops-agent:latest
+          command: ["./agent", "--mode", "agent"]
+          envFrom:
+            - configMapRef:
+                name: devops-agent-config

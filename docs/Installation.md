@@ -19,7 +19,7 @@ Mandatory utils:
 ```sh
 git clone https://github.com/letv1nnn/DevOps-Agent && cd DevOps-Agent
 cargo build --release
-./target/release/agent.exe --mode agent
+./target/release/agent --mode agent # .exe for Windows, and mode can be agent or interaction
 ```
 
 ## Docker
