@@ -1,0 +1,16 @@
+[package]
+name = "llm"
+version = "0.1.0"
+edition = "2024"
+authors = ["letv1nnn"]
+
+[dependencies]
+# async
+tokio = { version = "*", features = ["full"] }
+async-trait = "0.1"
+# http
+reqwest = { version = "0.12.23", features = ["json", "blocking", "stream"] }
+# json
+serde = { version = "1.0.228", features = ["derive"] }
+# logging
+tracing = "0.1.41"

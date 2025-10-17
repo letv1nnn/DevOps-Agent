@@ -1,0 +1,21 @@
+[package]
+name = "agent"
+version = "0.1.0"
+edition = "2024"
+authors = ["letv1nnn"]
+
+[dependencies]
+llm = { path = "../llm" }
+tool_executor = { path = "../tool_executor" }
+agent_core = { path = "../agent_core" }
+
+# async 
+tokio = { version = "*", features = ["full"] }
+# environment processing
+dotenv = { version = "0.15.0" }
+# logging
+tracing-subscriber = "0.3.20"
+tracing = "0.1.41"
+# cli
+clap = { version = "4.5.48", features = ["derive"] }
+crossterm = "0.29.0"

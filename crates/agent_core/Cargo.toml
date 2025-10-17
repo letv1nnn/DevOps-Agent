@@ -1,0 +1,20 @@
+[package]
+name = "agent_core"
+version = "0.1.0"
+edition = "2024"
+authors = ["letv1nnn"]
+
+[dependencies]
+tool_executor = { path = "../tool_executor" }
+llm = { path = "../llm" }
+
+# async 
+tokio = { version = "1.47.1", features = ["full"] }
+async-trait = "0.1"
+# http
+reqwest = { version = "0.12.23" }
+# logging
+tracing-subscriber = "0.3.20"
+tracing = "0.1.41"
+# cli
+crossterm = "0.29.0"
