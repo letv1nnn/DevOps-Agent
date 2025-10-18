@@ -16,7 +16,9 @@ It is mandatory to specify the github token, so the agent could interact with gi
 
 
 # --------------------------------------------- CONFIGURATION FOR GITHUB
+# Personal Access Token with repo and workflow read permissions
 # GITHUB_TOKEN=""
+# Owner and Repo name to analize
 # OWNER=""
 # REPO=""
 

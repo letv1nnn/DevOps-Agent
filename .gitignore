@@ -1,2 +1,38 @@
+# Rust build
 target/
-agent.log
+**/*.rs.bk
+
+# Cargo
+/.cargo/
+/.cargo/registry/
+/.cargo/git/
+
+# Coverage
+coverage/
+*.profraw
+*.profdata
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.*
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Temp files
+*.tmp
+*.swp
