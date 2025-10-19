@@ -13,6 +13,7 @@ use crate::utils::get_env::get_pipeline;
 
 
 pub async fn start_agent() -> Result<(), Box<dyn Error>> {
+
     info!("Agent has been started");
     
     let steps: Vec<Step> = match get_pipeline() {

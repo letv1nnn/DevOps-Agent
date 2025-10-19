@@ -35,8 +35,8 @@ pub async fn start_cli() -> Result<(), Box<dyn Error>> {
         let command = input.trim();
 
         match command {
-            "-l" | "--logs" => {
-                let file_name = PathBuf::from("agent.log");
+            "-al" | "--agent-logs" => {
+                let file_name = PathBuf::from("logs/agent.log");
 
                 let content = match read_file(file_name).await {
                         Ok(f) => f,
@@ -77,7 +77,11 @@ ________              ________                    _____                         
 "#;
 
 const COMMANDS: &str = r#"
-    -l, --logs                      View the agent logs
+    -a, --analize <file_name>       Analyze logs
+
+    -wl, --workflows-logs           View GitHub workflows logs
+    -al, --agent-logs               View the agent logs
+    
     -h, --help                      See all available commands
     -q, --quit                      Quit the agent
 "#;

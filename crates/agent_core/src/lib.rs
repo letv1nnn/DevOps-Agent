@@ -1,21 +1,14 @@
+use std::error::Error;
 use async_trait::async_trait;
-use llm::request_llm;
-use tool_executor::{
-    github_interaction::github_api_client::{
-        download_workflow_logs, get_github_env_data, list_workflow_runs
-    }, process_execution::read_file
-};
 use tracing::{
     error, info
 };
-use std::{
-    error::Error, path::PathBuf
-};
-use crate::agent_structs::{
+use crate::{agent_structs::{
     Agent, AgentInput, AgentResult, AgentStatus, DevOpsAgent, Step, ToolUser
-};
+}, wrappers::{analize_agent_logs, download_workflows_logs, list_workflows}};
 
 pub mod agent_structs;
+pub mod wrappers;
 
 impl DevOpsAgent {
     pub fn new(steps: Vec<Step>) -> Self {
@@ -61,66 +54,9 @@ impl Agent for DevOpsAgent {
 impl ToolUser for DevOpsAgent {
     async fn use_tool(&self, name: &str, _args: &[String]) -> Result<String, Box<dyn Error>> {
         match name {
-            "download_workflows_logs" => {
-                match get_github_env_data() {
-                    Some(data) => {
-                        info!("Using tool 'download_workflows_logs' to download GitHub workflow logs");
-
-                        let (token, owner, repo) = (&data[0], &data[1], &data[2]);
-                        let response = list_workflow_runs(owner, repo, &token).await?;
-                        
-                        if let Some(first_run) = response.workflow_runs.first() {
-                            download_workflow_logs(owner, repo, first_run.id, &token).await?;
-                            info!("Downloaded logs for workflow run ID: {}", first_run.id);
-                            Ok(format!("Downloaded logs for workflow run ID: {}", first_run.id))
-                        } else {
-                            error!("No workflow runs found");
-                            Err("No workflow runs found".into())
-                        }
-                    }
-                    None => {
-                        error!("One of github environment variables is not found in environment variables");
-                        Err("One of github environment variables is not found in environment variables".into())
-                    }
-                }
-            }
-            "list_workflows" => {
-                match get_github_env_data() {
-                    Some(data) => {
-                        info!("Using tool 'list_workflows' to get GitHub workflow runs");
-
-                        let (token, owner, repo) = (&data[0], &data[1], &data[2]);
-                        let response = list_workflow_runs(owner, repo, &token).await?;
-                        
-                        let mut output = String::new();
-                        for run in &response.workflow_runs {
-                            output.push_str(&format!("ID: {}, Status: {}, Conclusion: {:?}\n", run.id, run.status, run.conclusion));
-                        }
-
-                        info!("Retrieved {} workflow runs", response.workflow_runs.len());
-                        
-                        Ok(output)
-                    }
-                    None => {
-                        error!("One of github environment variables is not found in environment variables");
-                        Err("One of github environment variables is not found in environment variables".into())
-                    }
-                }
-            },
-            "analize_agent_logs" => {
-                info!("Using tool 'analize_logs' analize agent log file");
-
-                let file_name = PathBuf::from("agent.log");
-                let prompt = read_file(file_name).await?;
-
-                let system_prompt = String::from(
-                    "You are a helpful assistant that analizes and summarizes log files to human understandable format. You need to highlight any errors or warnings found in the logs."
-                );
-
-                let respond = request_llm(&prompt, &system_prompt).await?;
-
-                Ok(respond)
-            }
+            "download_workflows_logs" => download_workflows_logs().await,
+            "list_workflows" => list_workflows().await,
+            "analize_agent_logs" => analize_agent_logs().await,
             "notify" => {
                 info!("Using tool 'notify' to send notification");
                 return Ok("Given pipeline has been executed.".into());
