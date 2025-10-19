@@ -1,6 +1,7 @@
 use std::fs::OpenOptions;
-
-use tracing_subscriber::{fmt::writer::Tee, FmtSubscriber};
+use tracing_subscriber::{
+    fmt::writer::Tee, FmtSubscriber
+};
 
 pub fn init_logging() {
 

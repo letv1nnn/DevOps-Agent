@@ -60,7 +60,7 @@ pub async fn request_llm(prompt: &str, system_prompt: &str) -> Result<String, Bo
                 model,
             };
 
-            info!("Making a request to OpenAI");
+            info!("Making a request to Ollama");
             response = ollama.request_llm(prompt, system_prompt).await?;
             info!("Got the response from Ollama");
         }

@@ -7,7 +7,6 @@ use crossterm::{
 use clap::{
     Parser, ValueEnum
 };
-
 use tool_executor::process_execution::read_file;
 
 #[derive(Parser)]

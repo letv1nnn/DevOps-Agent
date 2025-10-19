@@ -17,5 +17,7 @@ members = [
     # in-memory and persistent memory structures
     "crates/memory_store",
     # safe wrappers for invoking shell commands or APIs
-    "crates/tool_executor"
+    "crates/tool_executor",
+    # tests
+    "tests"
 ]

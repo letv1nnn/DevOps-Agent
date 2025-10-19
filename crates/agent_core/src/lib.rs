@@ -1,13 +1,16 @@
 use async_trait::async_trait;
 use llm::request_llm;
-use tool_executor::{github_interaction::github_api_client::{download_workflow_logs, get_github_env_data, list_workflow_runs}, process_execution::read_file};
+use tool_executor::{
+    github_interaction::github_api_client::{
+        download_workflow_logs, get_github_env_data, list_workflow_runs
+    }, process_execution::read_file
+};
 use tracing::{
     error, info
 };
 use std::{
     error::Error, path::PathBuf
 };
-
 use crate::agent_structs::{
     Agent, AgentInput, AgentResult, AgentStatus, DevOpsAgent, Step, ToolUser
 };
