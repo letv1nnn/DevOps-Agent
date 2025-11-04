@@ -1,6 +1,7 @@
 use std::{
     error::Error, io::{self, Write}, path::PathBuf
 };
+use agent_core::wrappers::clear_file;
 use crossterm::{
     style::{Color, Stylize},
 };
@@ -22,7 +23,7 @@ pub enum Mode {
 }
 
 pub async fn start_cli() -> Result<(), Box<dyn Error>> {
-    println!("{}", DEVOPS_AGENT.with(Color::Magenta).bold());
+    println!("{}", DEVOPS_AGENT.with(Color::Rgb { r: 255, g: 70, b: 162 }).bold());
 
     let mut input = String::new();
     loop {
@@ -46,8 +47,40 @@ pub async fn start_cli() -> Result<(), Box<dyn Error>> {
                         }
                     };
                 
-                println!("{}", "Agent Logs".with(Color::Blue));
-                println!("{}", content);
+                if content.len() > 0 {
+                    println!("{}", "Agent Logs".with(Color::Blue));
+                    println!("{}", content);
+                } else {
+                    println!("{}", "Agent logs are empty".with(Color::Blue));
+                }
+            },
+            "-wl" | "--workflow-logs" => {
+                let file_name = PathBuf::from("logs/gh_workflows.log");
+                
+                let content = match read_file(file_name).await {
+                        Ok(f) => f,
+                        Err(e) => {
+                            println!("{}: {}", "Error opening log file".with(Color::Red), e);
+                            continue;
+                        }
+                    };
+
+                if content.len() > 0 {
+                    println!("{}", "Workflow Logs".with(Color::Blue));
+                    println!("{}", content);
+                } else {
+                    println!("{}", "Workflow logs are empty".with(Color::Blue));
+                }
+            },
+            "-cal" | "--clear-agent-logs" => {
+                let file_path = PathBuf::from("logs/agent.log");
+                clear_file(file_path).await;
+                println!("{}", "Agent logs have been cleaned".with(Color::Blue));
+            },
+            "-cwl" | "--clear-workflow-logs" => {
+                let file_path = PathBuf::from("logs/gh_workflows.log");
+                clear_file(file_path).await;
+                println!("{}", "GitHub Workflow logs have been cleaned".with(Color::Blue));
             },
             "-h" | "--help" => {
                 println!("{}", "Available Commands:".with(Color::Blue));
@@ -77,11 +110,13 @@ ________              ________                    _____                         
 "#;
 
 const COMMANDS: &str = r#"
-    -a, --analize <file_name>       Analyze logs
+    -a, --analize <file_name>      Analyze logs
 
-    -wl, --workflows-logs           View GitHub workflows logs
-    -al, --agent-logs               View the agent logs
+    -wl, --workflow-logs           View GitHub workflows logs
+    -al, --agent-logs              View the agent logs
+    -cal, --clear-agent-logs       Clear agent logs
+    -cwl, --clear-workflow-logs    Clear workflow logs
     
-    -h, --help                      See all available commands
-    -q, --quit                      Quit the agent
+    -h, --help                     See all available commands
+    -q, --quit                     Quit the agent
 "#;

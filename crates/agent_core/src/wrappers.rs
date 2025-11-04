@@ -8,7 +8,7 @@ use tracing::{
     error, info
 };
 use std::{
-    error::Error, path::PathBuf
+    error::Error, fs::OpenOptions, path::PathBuf
 };
 
 pub async fn download_workflows_logs() -> Result<String, Box<dyn Error>> {
@@ -72,4 +72,11 @@ pub async fn analize_agent_logs() -> Result<String, Box<dyn Error>> {
     let respond = request_llm(&prompt, &system_prompt).await?;
 
     Ok(respond)
+}
+
+pub async fn clear_file(path: PathBuf) {
+    let _ = OpenOptions::new()
+        .write(true)
+        .truncate(true)
+        .open(path);
 }

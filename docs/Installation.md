@@ -10,6 +10,14 @@ Mandatory utils:
     ```sh
     curl https://sh.rustup.rs -sSf | sh
     ```
+- ***Ollama***
+    > NOTE: For Windows, download it from the following website [Ollama](https://ollama.com/download/windows)
+
+    if you are using Ollama llm, then you will need to install it locally. However, I'd recommend to use Ollama only if you have 16 or more gb of RAM. Also, depending on your RAM, you can choose more faster Ollama model.
+    On Linux and macOS systems, this is done as follows:
+    ```sh
+    curl -fsSL https://ollama.com/install.sh | sh
+    ```
 
 
 ## Cargo
@@ -22,13 +30,18 @@ cargo build --release
 ./target/release/agent --mode agent # .exe for Windows, and mode can be agent or interaction
 ```
 
+## Make
+```sh
+git clone https://github.com/letv1nnn/DevOps-Agent && cd DevOps-Agent
+make # you'll see the available commands.
+```
+
 ## Docker
-(not done yet)
 
 [***Docker***](https://docs.docker.com/engine/install/)
 
 ```sh
-echo "Running agent with docker container"
+docker compose up --build 
 ```
 
 ## Kubernetes
