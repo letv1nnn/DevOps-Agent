@@ -5,7 +5,7 @@ use tracing::{
 };
 use crate::{agent_structs::{
     Agent, AgentInput, AgentResult, AgentStatus, DevOpsAgent, Step, ToolUser
-}, wrappers::{analize_agent_logs, download_workflows_logs, list_workflows}};
+}, wrappers::{analize_agent_logs, analize_gh_workflows_logs, download_workflows_logs, list_workflows}};
 
 pub mod agent_structs;
 pub mod wrappers;
@@ -57,6 +57,7 @@ impl ToolUser for DevOpsAgent {
             "download_workflows_logs" => download_workflows_logs().await,
             "list_workflows" => list_workflows().await,
             "analize_agent_logs" => analize_agent_logs().await,
+            "analize_gh_workflows_logs" => analize_gh_workflows_logs().await,
             "notify" => {
                 info!("Using tool 'notify' to send notification");
                 return Ok("Given pipeline has been executed.".into());

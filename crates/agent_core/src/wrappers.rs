@@ -62,10 +62,20 @@ pub async fn list_workflows() -> Result<String, Box<dyn Error>> {
 }
 
 pub async fn analize_agent_logs() -> Result<String, Box<dyn Error>> {
-    info!("Using tool 'analize_agent_logs' analize agent log file");
+    info!("Using tool 'analize_agent_logs' to analize agent log file");
 
     let file_name = PathBuf::from("logs/agent.log");
     let prompt = read_file(file_name).await?;
+
+    let respond = request_llm(&prompt, SYSTEM_PROMPT).await?;
+
+    Ok(respond)
+}
+
+pub async fn analize_gh_workflows_logs() -> Result<String, Box<dyn Error>> {
+    info!("Using tool 'analize_gh_workflows_logs' to analize gh workflows logs");
+    let file_path = PathBuf::from("logs/gh_workflows.log");
+    let prompt = read_file(file_path).await?;
 
     let respond = request_llm(&prompt, SYSTEM_PROMPT).await?;
 

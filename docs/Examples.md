@@ -2,7 +2,7 @@
 
 Basic agent cycle execution, he downloaded and analyzed the logs.
 
-![running_and_analizing_github_workflows_example](img/running_and_analizing_github_workflows_example.png)
+![agent_cycle](img/agent_cycle.png)
 
 Interaction with the agent
 ![basic_cli](img/cli1.png)
