@@ -10,6 +10,8 @@ use clap::{
 };
 use tool_executor::process_execution::read_file;
 
+use crate::utils::wrappers::analize_logs;
+
 #[derive(Parser)]
 pub struct CLI {
     #[clap(long, value_enum)]
@@ -92,6 +94,25 @@ pub async fn start_cli() -> Result<(), Box<dyn Error>> {
             },
             "" => continue,
             _ => {
+                let splitted_command = command.split_ascii_whitespace().collect::<Vec<&str>>();
+                let (first, second) = (splitted_command[0].trim(), splitted_command[1].trim());
+                if splitted_command.len() == 2 && (first == "-a" || first == "--analize") {
+                    let file_path = match second {
+                        "-al" => PathBuf::from("logs/agent.log"),
+                        "-wl" => PathBuf::from("logs/gh_workflows.log"),
+                        _ => PathBuf::from(second),
+                    };
+                    let respond = match analize_logs(file_path).await {
+                        Ok(res) => res,
+                        Err(_) => {
+                            println!("{}", "The given file does not exist".with(Color::Red));
+                            continue;
+                        }
+                    };
+                    println!("{}", "Logs Analysis".with(Color::Blue));
+                    println!("{:?}", respond);              
+                    continue;
+                }
                 println!("{}", "Invalid input".with(Color::Red));
             }
         }
@@ -110,13 +131,13 @@ ________              ________                    _____                         
 "#;
 
 const COMMANDS: &str = r#"
-    -a, --analize <file_name>      Analyze logs
+    -a, --analize <file_name/-al/-wl>   Analyze logs (-al for agent logs, -wl for workflows)
 
-    -wl, --workflow-logs           View GitHub workflows logs
-    -al, --agent-logs              View the agent logs
-    -cal, --clear-agent-logs       Clear agent logs
-    -cwl, --clear-workflow-logs    Clear workflow logs
+    -wl, --workflow-logs                View GitHub workflows logs
+    -al, --agent-logs                   View the agent logs
+    -cal, --clear-agent-logs            Clear agent logs
+    -cwl, --clear-workflow-logs         Clear workflow logs
     
-    -h, --help                     See all available commands
-    -q, --quit                     Quit the agent
+    -h, --help                          See all available commands
+    -q, --quit                          Quit the agent
 "#;

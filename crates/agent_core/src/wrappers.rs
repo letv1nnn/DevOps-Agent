@@ -11,6 +11,8 @@ use std::{
     error::Error, fs::OpenOptions, path::PathBuf
 };
 
+const SYSTEM_PROMPT: &str = "You are a helpful assistant that analizes and summarizes log files to human understandable format. You need to highlight any errors or warnings found in the logs. Should not be too long, so human could read them in just 1 minute, and structure your respond with bullet points";
+
 pub async fn download_workflows_logs() -> Result<String, Box<dyn Error>> {
     match get_github_env_data() {
         Some(data) => {
@@ -65,11 +67,7 @@ pub async fn analize_agent_logs() -> Result<String, Box<dyn Error>> {
     let file_name = PathBuf::from("logs/agent.log");
     let prompt = read_file(file_name).await?;
 
-    let system_prompt = String::from(
-        "You are a helpful assistant that analizes and summarizes log files to human understandable format. You need to highlight any errors or warnings found in the logs."
-    );
-
-    let respond = request_llm(&prompt, &system_prompt).await?;
+    let respond = request_llm(&prompt, SYSTEM_PROMPT).await?;
 
     Ok(respond)
 }

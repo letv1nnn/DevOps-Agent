@@ -28,26 +28,23 @@ It is mandatory to specify the github token, so the agent could interact with gi
 ```sh
 # --------------------------------------------- CONFIGURATION FOR LLM
 # For all llms, you need to fill these:
-# MODEL=""
+MODEL=""
 
 # For openai, you need to fill these:
-# OPENAI_API_KEY=""
-
-# For ollama, you need to fill these
-
+OPENAI_API_KEY=""
 
 # --------------------------------------------- CONFIGURATION FOR GITHUB
 # Personal Access Token with repo and workflow read permissions
-# GITHUB_TOKEN=""
+GITHUB_TOKEN=""
 # Owner and Repo name to analize
-# OWNER=""
-# REPO=""
+OWNER=""
+REPO=""
 
 # --------------------------------------------- CONFIGURATION FOR AGENT
 # predefined pipeline name in form of string, possible values: "list_workflows download_workflows_logs analize_agent_logs"
-# PIPELINE=""
+PIPELINE=""
 # agent run interval in hours unsigned int 64, default is set up to 2 hours
-# TIMEOUT_HOUR=u64 
+TIMEOUT_HOUR=u64 
 ```
 
 ### Cargo
@@ -61,7 +58,7 @@ cargo build --release
 ./target/release/agent --mode agent # .exe for Windows, and mode can be agent or interaction
 ```
 
-### Make
+### [Make](https://www.gnu.org/software/make/)
 
 I would recommend to use make in case of testing the agent. The easiest way to test the agent.
 ```sh
@@ -69,18 +66,15 @@ git clone https://github.com/letv1nnn/DevOps-Agent && cd DevOps-Agent
 make # you'll see the available commands.
 ```
 
-### Docker
+### [Docker](https://docs.docker.com/engine/install/)
 
-[***Docker***](https://docs.docker.com/engine/install/)
-
+Run the following command to run the docker container:
 ```sh
 docker compose up --build 
 ```
 
-### Kubernetes
-
-[***Kubernetes***](https://kubernetes.io/docs/tasks/tools/)
-I didn't deploy this agent to constantly run on any external services. I was using it locally, using [minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download). Also, I was using Docker to set up the cluster, subsequently, if you are using the same stack as me, run the following command.
+### [Kubernetes](https://kubernetes.io/docs/tasks/tools/)
+I didn’t deploy this agent to run continuously on any external services. I was testing it locally using [Minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download). I also used Docker to set up the cluster. Therefore, if you are using the same stack as I am, run the following command:
 
 ```sh
 # to start the minikube

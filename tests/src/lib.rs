@@ -5,7 +5,6 @@ mod tests {
     use tokio;
     use tool_executor::github_interaction::github_structs::{WorkflowRun, WorkflowRunsResponse};
 
-    // Helper to build mock data
     fn mock_workflow_runs() -> WorkflowRunsResponse {
         WorkflowRunsResponse {
             workflow_runs: vec![
@@ -15,10 +14,8 @@ mod tests {
         }
     }
 
-    // === download_workflows_logs ===
     #[tokio::test]
     async fn test_download_workflows_logs_success() {
-        // Mock environment data
         fn mock_get_github_env_data() -> Option<Vec<String>> {
             Some(vec!["token".into(), "owner".into(), "repo".into()])
         }
@@ -32,11 +29,7 @@ mod tests {
             Ok(())
         }
 
-        // Replace the real functions with mocks for testing
-        // (In practice, you'd refactor the original functions to accept them as parameters)
-
         let result = async {
-            // Inline fake version using our mocks
             let data = mock_get_github_env_data().unwrap();
             let (token, owner, repo) = (&data[0], &data[1], &data[2]);
             let response = mock_list_workflow_runs(owner, repo, token).await?;
@@ -53,7 +46,6 @@ mod tests {
         assert!(result.unwrap().contains("Downloaded logs"));
     }
 
-    // === list_workflows ===
     #[tokio::test]
     async fn test_list_workflows_success() {
         fn mock_get_github_env_data() -> Option<Vec<String>> {
@@ -82,7 +74,6 @@ mod tests {
         assert!(output.contains("completed"));
     }
 
-    // === analize_agent_logs ===
     #[tokio::test]
     async fn test_analyze_agent_logs_success() {
         async fn mock_read_file(_: PathBuf) -> Result<String, Box<dyn Error>> {
