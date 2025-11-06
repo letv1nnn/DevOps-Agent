@@ -1,10 +1,24 @@
-version: '3.9'
+version: '3.8'
 
 services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
   agent:
-    build: .
-    container_name: devops-agent
-    command: ["./agent", "--mode", "agent"]
-    restart: unless-stopped
-    env_file:
-      - .env
+    image: devops-agent:latest
+    environment:
+      - MODEL=${MODEL}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - OWNER=${OWNER}
+      - REPO=${REPO}
+      - PIPELINE=${PIPELINE}
+      - TIMEOUT_HOUR=${TIMEOUT_HOUR}
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_data:
